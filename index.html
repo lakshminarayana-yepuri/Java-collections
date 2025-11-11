@@ -3,149 +3,122 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Flipbook 📖</title>
-
-  <!-- ✅ jQuery (required for Turn.js) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <!-- ✅ Turn.js (flipbook animation library) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
-
+  <title>My Photo Book 📸</title>
   <style>
+    /* ====== GLOBAL STYLES ====== */
     body {
       margin: 0;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       font-family: 'Poppins', sans-serif;
-      overflow: hidden;
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+      color: #333;
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
+      font-size: 2.5em;
+      margin: 30px 0 10px;
       color: #fff;
-      margin: 20px 0 10px;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    #book {
-      width: 90vw;
-      height: 80vh;
+    p.subtitle {
+      color: #fff;
+      margin-bottom: 30px;
+      font-size: 1.2em;
+      opacity: 0.9;
+    }
+
+    /* ====== GALLERY GRID ====== */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
       margin: 0 auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      border-radius: 10px;
-      background: #fff;
     }
 
-    .page {
-      background: white;
+    /* ====== IMAGE CARD ====== */
+    .photo {
+      position: relative;
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      background: #fff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .page img {
+    .photo:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    .photo img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      border-radius: 5px;
+      object-fit: cover;
+      display: block;
+      border-radius: 15px;
     }
 
-    /* Navigation Buttons */
-    .nav-btn {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 2em;
+    /* ====== CAPTION (OPTIONAL) ====== */
+    .caption {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.4);
       color: #fff;
-      background: rgba(0,0,0,0.3);
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      z-index: 10;
-      transition: background 0.3s ease;
+      padding: 8px 0;
+      font-size: 1em;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
-    .nav-btn:hover { background: rgba(0,0,0,0.6); }
-    #prev { left: 20px; }
-    #next { right: 20px; }
 
+    .photo:hover .caption {
+      opacity: 1;
+    }
+
+    /* ====== FOOTER ====== */
     footer {
-      text-align: center;
-      margin-top: 15px;
+      margin: 40px 0 20px;
+      font-size: 0.9em;
       color: #fff;
       opacity: 0.8;
-    }
-
-    @media (max-width: 768px) {
-      #book {
-        width: 100vw;
-        height: 75vh;
-      }
-      .nav-btn { display: none; } /* mobile users swipe instead */
     }
   </style>
 </head>
 <body>
 
-  <h1>📘 My Flipbook</h1>
+  <h1>📖 My Photo Book</h1>
+  <p class="subtitle">A collection of 23 special memories 💕</p>
 
-  <button id="prev" class="nav-btn">⟨</button>
-  <div id="book">
-    <!-- 23 pages -->
-    <div class="page"><img src="1.png" alt="Page 1"></div>
-    <div class="page"><img src="2.png" alt="Page 2"></div>
-    <div class="page"><img src="3.png" alt="Page 3"></div>
-    <div class="page"><img src="4.png" alt="Page 4"></div>
-    <div class="page"><img src="5.png" alt="Page 5"></div>
-    <div class="page"><img src="6.png" alt="Page 6"></div>
-    <div class="page"><img src="7.png" alt="Page 7"></div>
-    <div class="page"><img src="8.png" alt="Page 8"></div>
-    <div class="page"><img src="9.png" alt="Page 9"></div>
-    <div class="page"><img src="10.png" alt="Page 10"></div>
-    <div class="page"><img src="11.png" alt="Page 11"></div>
-    <div class="page"><img src="12.png" alt="Page 12"></div>
-    <div class="page"><img src="13.png" alt="Page 13"></div>
-    <div class="page"><img src="14.png" alt="Page 14"></div>
-    <div class="page"><img src="15.png" alt="Page 15"></div>
-    <div class="page"><img src="16.png" alt="Page 16"></div>
-    <div class="page"><img src="17.png" alt="Page 17"></div>
-    <div class="page"><img src="18.png" alt="Page 18"></div>
-    <div class="page"><img src="19.png" alt="Page 19"></div>
-    <div class="page"><img src="20.png" alt="Page 20"></div>
-    <div class="page"><img src="21.png" alt="Page 21"></div>
-    <div class="page"><img src="22.png" alt="Page 22"></div>
-    <div class="page"><img src="23.png" alt="Page 23"></div>
+  <div class="gallery">
+    <!-- 23 images auto numbered -->
+    <!-- You can edit captions or remove the <div class="caption"> line -->
+    <div class="photo"><img src="1.png" alt="Photo 1"><div class="caption">Photo 1</div></div>
+    <div class="photo"><img src="2.png" alt="Photo 2"><div class="caption">Photo 2</div></div>
+    <div class="photo"><img src="3.png" alt="Photo 3"><div class="caption">Photo 3</div></div>
+    <div class="photo"><img src="4.png" alt="Photo 4"><div class="caption">Photo 4</div></div>
+    <div class="photo"><img src="5.png" alt="Photo 5"><div class="caption">Photo 5</div></div>
+    <div class="photo"><img src="6.png" alt="Photo 6"><div class="caption">Photo 6</div></div>
+    <div class="photo"><img src="7.png" alt="Photo 7"><div class="caption">Photo 7</div></div>
+    <div class="photo"><img src="8.png" alt="Photo 8"><div class="caption">Photo 8</div></div>
+    <div class="photo"><img src="9.png" alt="Photo 9"><div class="caption">Photo 9</div></div>
+    <div class="photo"><img src="10.png" alt="Photo 10"><div class="caption">Photo 10</div></div>
+    <div class="photo"><img src="11.png" alt="Photo 11"><div class="caption">Photo 11</div></div>
+    <div class="photo"><img src="12.png" alt="Photo 12"><div class="caption">Photo 12</div></div>
+    <div class="photo"><img src="13.png" alt="Photo 13"><div class="caption">Photo 13</div></div>
+    <div class="photo"><img src="14.png" alt="Photo 14"><div class="caption">Photo 14</div></div>
+    <div class="photo"><img src="15.png" alt="Photo 15"><div class="caption">Photo 15</div></div>
+    <div class="photo"><img src="16.png" alt="Photo 16"><div class="caption">Photo 16</div></div>
+    <div class="photo"><img src="17.png" alt="Photo 17"><div class="caption">Photo 17</div></div>
+    <div class="photo"><img src="18.png" alt="Photo 18"><div class="caption">Photo 18</div></div>
+    <div class="photo"><img src="19.png" alt="Photo 19"><div class="caption">Photo 19</div></div>
+    <div class="photo"><img src="20.png" alt="Photo 20"><div class="caption">Photo 20</div></div>
+    <div class="photo"><img src="21.png" alt="Photo 21"><div class="caption">Photo 21</div></div>
+    <div class="photo"><img src="22.png" alt="Photo 22"><div class="caption">Photo 22</div></div>
+    <div class="photo"><img src="23.png" alt="Photo 23"><div class="caption">Photo 23</div></div>
   </div>
-  <button id="next" class="nav-btn">⟩</button>
-
-  <script>
-    // Initialize Turn.js only after page loads
-    $(document).ready(function () {
-      const $book = $('#book');
-
-      $book.turn({
-        width: $book.width(),
-        height: $book.height(),
-        autoCenter: true,
-        gradients: true,
-        acceleration: true,
-      });
-
-      // Next and Previous buttons
-      $('#next').click(function () {
-        $book.turn('next');
-      });
-      $('#prev').click(function () {
-        $book.turn('previous');
-      });
-
-      // Resize support
-      $(window).on('resize', function () {
-        $book.turn('size', $book.width(), $book.height());
-      });
-    });
-  </script>
 
 </body>
 </html>
