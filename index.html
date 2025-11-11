@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Flipbook 📖</title>
 
-  <!-- Turn.js (via CDN) -->
+  <!-- ✅ jQuery (required for Turn.js) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- ✅ Turn.js (flipbook animation library) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
 
   <style>
@@ -116,30 +119,30 @@
   </div>
   <button id="next" class="nav-btn">⟩</button>
 
-  <footer>© 2025 My Photo Book | Page-turn view 💖</footer>
-
   <script>
-    // Initialize Turn.js
-    document.addEventListener("DOMContentLoaded", () => {
-      const book = document.getElementById("book");
-      $(book).turn({
-        width: book.offsetWidth,
-        height: book.offsetHeight,
+    // Initialize Turn.js only after page loads
+    $(document).ready(function () {
+      const $book = $('#book');
+
+      $book.turn({
+        width: $book.width(),
+        height: $book.height(),
         autoCenter: true,
         gradients: true,
+        acceleration: true,
       });
 
-      // Navigation
-      document.getElementById("next").addEventListener("click", () => {
-        $(book).turn("next");
+      // Next and Previous buttons
+      $('#next').click(function () {
+        $book.turn('next');
       });
-      document.getElementById("prev").addEventListener("click", () => {
-        $(book).turn("previous");
+      $('#prev').click(function () {
+        $book.turn('previous');
       });
 
-      // Resize handling
-      window.addEventListener("resize", () => {
-        $(book).turn("size", book.offsetWidth, book.offsetHeight);
+      // Resize support
+      $(window).on('resize', function () {
+        $book.turn('size', $book.width(), $book.height());
       });
     });
   </script>
